@@ -37,11 +37,11 @@ def get_tcp_header(raw_data):
     data = raw_data[offset:]
     return src_port, dest_port, sequence, acknowledgment, flag_urg, flag_ack, flag_psh, flag_rst, flag_syn, flag_fin, data
 
-#def get_icmp_header(raw_data):
-
 def main():
     print("Starting packet sniff...\n")
     s = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_TCP)
+    host = socket.gethostname()
+    s.bind((host, 9999))
     while True:
         raw_data, address = s.recvfrom(65535)
         eth = get_ethernet_header(raw_data)
